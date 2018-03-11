@@ -19,15 +19,8 @@
 
 
 // Set namespaces in languages that support it.
-namespace cl fastserv
+
 namespace cpp fastserv
-namespace d fastserv
-namespace dart fastserv
-namespace java fastserv
-namespace php fastserv
-namespace perl fastserv
-namespace haxe fastserv
-namespace netcore fastserv
 
 service ModelServer {
     map<i32, double> infer(1:binary image)
