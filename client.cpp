@@ -20,6 +20,18 @@
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 
+#include <thrift/protocol/TBinaryProtocol.h>
+#include <thrift/transport/TSocket.h>
+#include <thrift/transport/TTransportUtils.h>
+
+#include "thrift/gen-cpp/ModelServer.h"
+
+using namespace std;
+using namespace fastserv;
+using namespace apache::thrift;
+using namespace apache::thrift::protocol;
+using namespace apache::thrift::transport;
+
 int main(int argc, char *argv[]) {
 
   // Setup CLI and remove unused flags from input.
@@ -31,9 +43,31 @@ int main(int argc, char *argv[]) {
   google::InitGoogleLogging(argv[0]);
   google::InstallFailureSignalHandler();
 
+  boost::shared_ptr<TTransport> socket(new TSocket("localhost", 9090));
+  boost::shared_ptr<TTransport> transport(new TBufferedTransport(socket));
+  boost::shared_ptr<TProtocol> protocol(new TBinaryProtocol(transport));
+
+  ModelServerClient client(protocol);
+
   LOG(INFO) << "Fastserv client started.";
 
-  // TODO: connect to server.
+  try {
+    transport->open();
+  } catch (const std::exception& ex) {
+    LOG(FATAL) << "Error occurred while connecting to service: " << ex.what();
+  } catch (...) {
+    LOG(FATAL) << "Unknown error occurred while connecting to service";
+  }
+
+  try {
+    std::map<int32_t, double> return_value;
+    const std::string& image = "Base64 encode image";
+    client.infer(return_value, image);
+  } catch (const std::exception& ex) {
+    LOG(FATAL) << "Error occurred while calling service: " << ex.what();
+  } catch (...) {
+    LOG(FATAL) << "Unknown error occurred while calling service";
+  }
 
   LOG(INFO) << "Fastserv client finished.";
   return 0;
