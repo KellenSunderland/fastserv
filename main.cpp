@@ -1,8 +1,6 @@
 #include <gflags/gflags.h>
 #include <glog/logging.h>
 
-#include <iostream>
-
 int main(int argc, char *argv[]) {
 
   // Setup CLI and remove unused flags from input.
@@ -14,10 +12,10 @@ int main(int argc, char *argv[]) {
   google::InitGoogleLogging(argv[0]);
   google::InstallFailureSignalHandler();
 
-  LOG(INFO) << "Fastserv started." << std::endl;
+  LOG(INFO) << "Fastserv started.";
 
   // TODO: model serving
 
-  LOG(INFO) << "Fastserv shutting down." << std::endl;
+  LOG(INFO) << "Fastserv shutting down.";
   return 0;
 }

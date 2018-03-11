@@ -1,5 +1,5 @@
-# CMake 3.0 required for the Hunter package manager.
-cmake_minimum_required(VERSION 3.0)
+# CMake 3.1 required for the Hunter package manager.
+cmake_minimum_required(VERSION 3.1)
 
 # Setup Hunter package manager.
 include("cmake/HunterGate.cmake")
@@ -19,8 +19,17 @@ find_package(gflags CONFIG REQUIRED)
 hunter_add_package(glog)
 find_package(glog CONFIG REQUIRED)
 
+# Add GTest for unit tests.
+hunter_add_package(GTest)
+find_package(GMock CONFIG REQUIRED)
+
 set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
+set(WITH_LIBEVENT true)
+set(BUILD_COMPILER true)
+
 add_executable(fastserv main.cpp)
 target_link_libraries(fastserv
+    gflags
     glog::glog
-    gflags)
+    GMock::main)
