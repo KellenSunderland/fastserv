@@ -31,7 +31,7 @@ find_package(thrift CONFIG REQUIRED)
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED true)
 
-add_executable(fastserv_server server.cpp)
+add_executable(fastserv_server server.cpp thrift/gen-cpp/ModelServer.cpp)
 add_executable(fastserv_client client.cpp)
 
 target_link_libraries(fastserv_server
