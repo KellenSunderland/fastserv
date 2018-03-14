@@ -13,12 +13,12 @@ make -j $(nproc)
 
 # Run instructions
 ```bash
-./fastserve
+./fastserv_server
 ```
 By default this will log all info or higher level events to a fastserv file in /tmp.  Critical events will be echoed 
 to stderr.
 
 To run with all events logged to stderr:
 ```bash
-GLOG_logtostderr=1 ./fastserv
+GLOG_logtostderr=1 ./fastserv_server
 ```
